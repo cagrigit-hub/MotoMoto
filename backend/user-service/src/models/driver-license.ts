@@ -8,7 +8,7 @@ export interface DrivingLicense extends Document {
 
 const drivingLicenseSchema = new Schema<DrivingLicense>({
   userId: { type: Schema.Types.ObjectId, required: true },
-  licenseNumber: { type: String, required: true },
+  licenseNumber: { type: String, required: true , unique: true},
   verified: { type: Boolean, default: false },
 });
 

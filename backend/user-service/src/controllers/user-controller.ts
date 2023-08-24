@@ -3,8 +3,6 @@ import bcrypt from 'bcrypt';
 import { validationResult } from 'express-validator';
 import ServerError from '../errors/server-error';
 import UserService from '../services/user-service';
-import RegisterError from '../errors/register-error';
-import LoginError from '../errors/login-error';
 
 export const registerUser = async (req: Request, res: Response) => {
   if(!validationResult(req).isEmpty()) {
@@ -40,8 +38,21 @@ export const loginUser = async (req: Request, res: Response) => {
   
   try {
     const { accessToken, refreshToken } = await UserService.loginUser(email, password);
+      // set also a cookie for server side rendering
+    res.cookie('accessToken', accessToken, { httpOnly: true });
     res.status(200).json({ accessToken, refreshToken });
   } catch (error : any) {
     throw error;
   }
 };
+
+export const getUser = async (req: Request, res: Response) => {
+  const { userId } = req.params;
+  try {
+    const user = await UserService.getUser(userId);
+    res.status(200).json(user);
+  } catch (error : any) {
+    throw error;
+  }
+}
+

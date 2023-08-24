@@ -57,19 +57,101 @@ class UserService {
           expiresIn: jwtConfig.refreshExpiresIn,
         }
       );
-
       return { accessToken, refreshToken };
     } catch (error: any) {
 
       throw new LoginError(error.message);
     }
   }
-  static async isAdmin(userId: string) {
-    // grab user from db
-    const user = await UserModel.findOne({ _id: userId });
-    if(!user) throw new Error("User not found");
-    // check if user is admin
-    return user?.isAdmin;
+  static async getUser(userId: string) {
+    try {
+      const user = await UserModel.findById(userId).populate("drivingLicense");
+      if (!user) {
+        throw new Error("User not found");
+      }
+      return user;
+    } catch (error : any) {
+      throw new Error(error.message);
+    }
+  }
+  // TODO: WILL BE USED LATER
+  static async deleteUser(userId: string) {
+    try {
+      const user = await UserModel.findById(userId);
+      if (!user) {
+        throw new Error("User not found");
+      }
+      await user.deleteOne(
+        { _id: userId }
+      );
+    } catch (error : any) {
+      throw new Error(error.message);
+    }
+  }
+  // TODO: WILL BE USED LATER
+  static async banUser(userId: string) {
+    try {
+      const user = await UserModel.findById(userId);
+      if (!user) {
+        throw new Error("User not found");
+      }
+      user.isBlocked = true;
+      await user.save();
+    } catch (error : any) {
+      throw new Error(error.message);
+    }
+  }
+  // TODO: WILL BE USED LATER
+  static async unbanUser(userId: string) {
+    try {
+      const user = await UserModel.findById(userId);
+      if (!user) {
+        throw new Error("User not found");
+      }
+      user.isBlocked = false;
+      await user.save();
+    } catch (error : any) {
+      throw new Error(error.message);
+    }
+  }
+  // TODO: WILL BE USED LATER
+  static async updateUsername(userId: string, username: string) {
+    try {
+      const user = await UserModel.findById(userId);
+      if (!user) {
+        throw new Error("User not found");
+      }
+      user.username = username;
+      await user.save();
+    } catch (error : any) {
+      throw new Error(error.message);
+    }
+  }
+  // TODO: WILL BE USED LATER
+  static async updatePassword(userId: string, password: string) {
+    try {
+      const user = await UserModel.findById(userId);
+      if (!user) {
+        throw new Error("User not found");
+      }
+      user.password = password;
+      await user.save();
+    } catch (error : any) {
+      throw new Error(error.message);
+    }
+  }
+  // TODO: WILL BE USED LATER
+  static async verifyEmail(userId: string) {
+    try {
+      const user = await UserModel.findById(userId);
+      if (!user) {
+        throw new Error("User not found");
+      }
+      user.isEmailVerified = true;
+      await user.save();
+    } catch (error : any) {
+      throw new Error(error.message);
+    }
   }
 }
 
