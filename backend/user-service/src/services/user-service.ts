@@ -1,9 +1,9 @@
-import LoginError from "src/errors/login-error";
+import LoginError from "../errors/login-error";
 import UserModel from "../models/user-model";
 import bcrypt from "bcrypt";
-import jwtConfig from "src/config/jwt";
+import jwtConfig from "../config/jwt";
 import jwt from "jsonwebtoken";
-import { CustomError } from "src/errors/custom-error";
+import { CustomError } from "../errors/custom-error";
 class UserService {
   static async registerUser(username: string, email: string, password: string) {
     try {

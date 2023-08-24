@@ -1,6 +1,6 @@
 import express from 'express';
 import { verifyLicense } from '../controllers/license-controller';
-import { isAdminMiddleware } from 'src/middlewares/is-admin-middleware';
+import { isAdminMiddleware } from '../middlewares/is-admin-middleware';
 
 const router = express.Router();
 

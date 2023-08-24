@@ -1,7 +1,7 @@
 // middlewares/authMiddleware.ts
 import { Request, Response, NextFunction } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { validateAccessToken } from 'src/utils/auth-utils';
+import { validateAccessToken } from '../utils/auth-utils';
 
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const token = req.header('Authorization');

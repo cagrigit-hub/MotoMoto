@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { validationResult } from 'express-validator';
-import ServerError from 'src/errors/server-error';
-import UserService from 'src/services/user-service';
+import ServerError from '../errors/server-error';
+import UserService from '../services/user-service';
 
 export const registerUser = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;

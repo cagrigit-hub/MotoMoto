@@ -1,6 +1,6 @@
-import NotLicensed from 'src/errors/not-licensed';
+import NotLicensed from '../errors/not-licensed';
 import DrivingLicense from '../models/driver-license'; 
-import { CustomError } from 'src/errors/custom-error';
+import { CustomError } from '../errors/custom-error';
 
 class LicenseService {
   static async verifyUserLicense(userId: string) {

@@ -1,7 +1,7 @@
 // routes/authRoutes.ts
 import express from 'express';
 import jwt from 'jsonwebtoken';
-import jwtConfig from 'src/config/jwt';
+import jwtConfig from '../config/jwt';
 const router = express.Router();
 
 // Route for token refresh

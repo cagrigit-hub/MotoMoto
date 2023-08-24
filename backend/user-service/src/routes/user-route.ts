@@ -1,7 +1,7 @@
 // routes/UserRoutes.ts
 import express from 'express';
 import { registerUser, loginUser } from '../controllers/user-controller';
-import { loginValidation, registerValidation } from 'src/validations/authValidations';
+import { loginValidation, registerValidation } from '../validations/authValidations';
 
 const router = express.Router();
 

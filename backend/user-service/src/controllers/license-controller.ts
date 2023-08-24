@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import LicenseService from '../services/license-service'; // Import your LicenseService
-import ServerError from 'src/errors/server-error';
+import ServerError from '../errors/server-error';
 
 export const verifyLicense = async (req: Request, res: Response) => {
   const { userId } = req.params; // Assuming the user ID is passed as a parameter
