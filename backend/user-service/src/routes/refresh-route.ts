@@ -1,11 +1,12 @@
 // routes/authRoutes.ts
 import express from 'express';
 import jwt from 'jsonwebtoken';
-import jwtConfig from 'src/config/jwt';
+import jwtConfig from '../config/jwt';
+import { authMiddleware } from '../middlewares/auth-middleware';
 const router = express.Router();
 
 // Route for token refresh
-router.post('/refresh', (req, res) => {
+router.post('/', authMiddleware,(req, res) => {
   const refresh_token = req.body.refresh_token; // Get the refresh token from the request body
 
   // Verify the refresh token

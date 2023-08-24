@@ -1,9 +1,10 @@
-import LoginError from "src/errors/login-error";
 import UserModel from "../models/user-model";
 import bcrypt from "bcrypt";
-import jwtConfig from "src/config/jwt";
+import jwtConfig from "../config/jwt";
 import jwt from "jsonwebtoken";
-import { CustomError } from "src/errors/custom-error";
+import RegisterError from "../errors/register-error";
+import LoginError from "../errors/login-error";
+
 class UserService {
   static async registerUser(username: string, email: string, password: string) {
     try {
@@ -13,25 +14,36 @@ class UserService {
         password,
       });
       await newUser.save();
-    } catch (error) {
-      throw new CustomError();
+    } catch (error: any) {
+      // handle mongo error if duplication error occurs
+      if (error.code === 11000) {
+        throw new RegisterError("User already exists");
+      } else {
+        throw new RegisterError(error.message);
+      }
     }
   }
   static async loginUser(email: string, password: string) {
     try {
       const user = await UserModel.findOne({ email });
-      // Check if user exists and password is valid
-      if (!user || !(await bcrypt.compare(password, user.password))) {
-        throw new LoginError("Invalid email or password");
+      
+      // Check if user exists and password is valid, password is salted like salt.password
+      if (!user) {
+        throw new LoginError("Invalid credentials");
       }
-      // Check if user exists and password is valid
-      if (!user || !(await bcrypt.compare(password, user.password))) {
-        throw new LoginError("Invalid email or password");
+      const [salt, hashedPassword] = user.password.split("-");
+      const hashedInputPassword = await bcrypt.hash(password, salt);
+      if (hashedInputPassword !== hashedPassword) {
+        throw new LoginError("Invalid credentials");
       }
-
+      
+      const jwt_payload = {
+        userId: user._id,
+        isAdmin: user.isAdmin,
+      }
       // Generate JWT tokens
       const accessToken = jwt.sign(
-        { userId: user._id },
+        jwt_payload,
         jwtConfig.accessSecret,
         {
           expiresIn: jwtConfig.accessExpiresIn,
@@ -39,7 +51,7 @@ class UserService {
       );
 
       const refreshToken = jwt.sign(
-        { userId: user._id },
+        jwt_payload,
         jwtConfig.refreshSecret,
         {
           expiresIn: jwtConfig.refreshExpiresIn,
@@ -47,9 +59,17 @@ class UserService {
       );
 
       return { accessToken, refreshToken };
-    } catch (error) {
-      throw new CustomError();
+    } catch (error: any) {
+
+      throw new LoginError(error.message);
     }
+  }
+  static async isAdmin(userId: string) {
+    // grab user from db
+    const user = await UserModel.findOne({ _id: userId });
+    if(!user) throw new Error("User not found");
+    // check if user is admin
+    return user?.isAdmin;
   }
 }
 
