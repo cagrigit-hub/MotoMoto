@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 const connectDB = async () => {
   try {
-    await mongoose.connect('mongodb://<container-ip>:27017/your-database-name', {
+    await mongoose.connect('mongodb://localhost:27017/users', {
         autoIndex: true,
     });
     console.log('Connected to MongoDB');
