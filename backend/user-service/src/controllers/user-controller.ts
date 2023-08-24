@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { validationResult } from 'express-validator';
-import ServerError from '../errors/server-error';
+import InvalidCredentials from '../errors/invalid-credentials';
 import UserService from '../services/user-service';
 
 export const registerUser = async (req: Request, res: Response) => {
@@ -10,7 +10,7 @@ export const registerUser = async (req: Request, res: Response) => {
     // return errors object inside of r as a string
     const errors = r.array().map((err) => err.msg).join(', ');
 
-    throw new ServerError(errors);
+    throw new InvalidCredentials(errors);
   }
   const { username, email, password } = req.body;
  
@@ -32,7 +32,7 @@ export const registerUser = async (req: Request, res: Response) => {
 
 export const loginUser = async (req: Request, res: Response) => {
   if(!validationResult(req).isEmpty()) {
-    throw new ServerError('Invalid request body');
+    throw new InvalidCredentials('Invalid request body');
   }
   const { email, password } = req.body;
   

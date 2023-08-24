@@ -78,7 +78,14 @@ class LicenseService {
       throw new NotLicensed("User does not have a driving license");
     }
   }
-  
+  static async getAllLicenses() {
+    try {
+      const drivingLicenses = await DrivingLicense.find();
+      return drivingLicenses;
+    } catch (error) {
+      throw new NotLicensed("No driving licenses");
+    }
+  }
 }
 
 export default LicenseService;

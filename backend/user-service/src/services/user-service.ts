@@ -153,6 +153,15 @@ class UserService {
       throw new Error(error.message);
     }
   }
+
+  static async getAllUsers(){
+    try {
+      const users = await UserModel.find();
+      return users;
+    } catch (error : any) {
+      throw new Error(error.message);
+    }
+  }
 }
 
 export default UserService;
