@@ -1,9 +1,9 @@
-// controllers/UserController.ts
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { validationResult } from 'express-validator';
 import ServerError from 'src/errors/server-error';
 import UserService from 'src/services/user-service';
+
 export const registerUser = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
   if(!validationResult(req).isEmpty()) {

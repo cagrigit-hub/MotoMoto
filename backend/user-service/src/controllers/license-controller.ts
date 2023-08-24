@@ -1,6 +1,6 @@
-// controllers/LicenseController.ts
 import { Request, Response } from 'express';
 import LicenseService from '../services/license-service'; // Import your LicenseService
+import ServerError from 'src/errors/server-error';
 
 export const verifyLicense = async (req: Request, res: Response) => {
   const { userId } = req.params; // Assuming the user ID is passed as a parameter
@@ -11,6 +11,6 @@ export const verifyLicense = async (req: Request, res: Response) => {
 
     res.status(200).json({ message: 'License verified successfully' });
   } catch (error) {
-    res.status(500).json({ error: 'An error occurred while verifying the license' });
+    throw new ServerError('An error occurred while verifying the license');
   }
 };
