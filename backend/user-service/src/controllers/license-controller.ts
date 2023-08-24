@@ -4,11 +4,6 @@ import LicenseService from '../services/license-service'; // Import your License
 
 export const verifyLicense = async (req: Request, res: Response) => {
   const { userId } = req.params; // Assuming the user ID is passed as a parameter
-  const { isAdmin } = req.user; // Assuming you have middleware that populates the user object
-
-  if (!isAdmin) {
-    return res.status(403).json({ error: 'Unauthorized' });
-  }
 
   try {
     // Call the LicenseService function to verify the license
