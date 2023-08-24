@@ -9,10 +9,15 @@ export interface User extends Document {
   isAdmin: boolean;
   isBlocked: boolean;
   isEmailVerified: boolean;
+  
 }
-
+// currentLocation: {
+  //   type: string;
+  //   coordinates: [number, number];
+  // }
+  
 const userSchema = new Schema<User>({
-  username: { type: String, required: true },
+  username: { type: String, required: true, unique: true, minlength: 3, maxlength: 20 },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   drivingLicense: { type: Schema.Types.ObjectId, ref: 'DrivingLicense', default: null },
