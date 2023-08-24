@@ -38,6 +38,8 @@ export const loginUser = async (req: Request, res: Response) => {
   
   try {
     const { accessToken, refreshToken } = await UserService.loginUser(email, password);
+      // set also a cookie for server side rendering
+    res.cookie('accessToken', accessToken, { httpOnly: true });
     res.status(200).json({ accessToken, refreshToken });
   } catch (error : any) {
     throw error;

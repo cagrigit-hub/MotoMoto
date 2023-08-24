@@ -57,7 +57,6 @@ class UserService {
           expiresIn: jwtConfig.refreshExpiresIn,
         }
       );
-
       return { accessToken, refreshToken };
     } catch (error: any) {
 
@@ -66,7 +65,7 @@ class UserService {
   }
   static async getUser(userId: string) {
     try {
-      const user = await UserModel.findById(userId);
+      const user = await UserModel.findById(userId).populate("drivingLicense");
       if (!user) {
         throw new Error("User not found");
       }
