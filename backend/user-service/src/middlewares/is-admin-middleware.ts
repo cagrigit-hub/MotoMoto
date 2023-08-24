@@ -1,15 +1,15 @@
 // middlewares/isAdmin.ts
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from "express";
+import ForbiddenError from "src/errors/forbidden-error";
 
-export const isAdminMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  // Check if the user is an admin
+export const isAdminMiddleware = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   if (req.user && req.user.isAdmin) {
-    next(); // User is an admin, proceed to the next middleware/route handler
+    next();
   } else {
-    res.status(403).json({ error: 'Unauthorized' }); // User is not an admin
+    throw new ForbiddenError();
   }
 };
-
-
-// req.user doesnt exists so add
-
