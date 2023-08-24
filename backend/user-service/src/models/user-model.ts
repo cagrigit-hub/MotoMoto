@@ -7,6 +7,8 @@ export interface User extends Document {
   password: string;
   drivingLicense: mongoose.Types.ObjectId;
   isAdmin: boolean;
+  isBlocked: boolean;
+  isEmailVerified: boolean;
 }
 
 const userSchema = new Schema<User>({
@@ -15,6 +17,8 @@ const userSchema = new Schema<User>({
   password: { type: String, required: true },
   drivingLicense: { type: Schema.Types.ObjectId, ref: 'DrivingLicense' },
   isAdmin: { type: Boolean, default: false },
+  isBlocked: { type: Boolean, default: false },
+  isEmailVerified: { type: Boolean, default: false },
 });
 
 export default mongoose.model<User>('User', userSchema);
