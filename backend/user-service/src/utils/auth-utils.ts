@@ -1,19 +1,21 @@
 // utils/authUtils.ts
 import jwt from 'jsonwebtoken';
-import envy from '../config/env';
+import jwtConfig from '../config/jwt';
 
 export const validateAccessToken = (token: string): boolean => {
   try {
-    jwt.verify(token, envy.jwt_access_secret);
+    // console log get rid of Bearer
+    jwt.verify(token, jwtConfig.accessSecret);
     return true;
   } catch (error) {
+    console.log(error)
     return false;
   }
 };
 
 export const validateRefreshToken = (token: string): boolean => {
   try {
-    jwt.verify(token, envy.jwt_refresh_secret);
+    jwt.verify(token, jwtConfig.refreshSecret);
     return true;
   } catch (error) {
     return false;

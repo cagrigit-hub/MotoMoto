@@ -1,9 +1,7 @@
-import LoginError from "../errors/login-error";
 import UserModel from "../models/user-model";
 import bcrypt from "bcrypt";
 import jwtConfig from "../config/jwt";
 import jwt from "jsonwebtoken";
-import { CustomError } from "../errors/custom-error";
 
 class UserService {
   static async registerUser(username: string, email: string, password: string) {
@@ -32,10 +30,13 @@ class UserService {
       if (!user || !(await bcrypt.compare(password, user.password))) {
         throw new Error("Invalid email or password");
       }
-
+      const jwt_payload = {
+        userId: user._id,
+        isAdmin: user.isAdmin,
+      }
       // Generate JWT tokens
       const accessToken = jwt.sign(
-        { userId: user._id },
+        jwt_payload,
         jwtConfig.accessSecret,
         {
           expiresIn: jwtConfig.accessExpiresIn,
@@ -43,7 +44,7 @@ class UserService {
       );
 
       const refreshToken = jwt.sign(
-        { userId: user._id },
+        jwt_payload,
         jwtConfig.refreshSecret,
         {
           expiresIn: jwtConfig.refreshExpiresIn,
@@ -55,6 +56,13 @@ class UserService {
 
       throw new Error(error.message);
     }
+  }
+  static async isAdmin(userId: string) {
+    // grab user from db
+    const user = await UserModel.findOne({ _id: userId });
+    if(!user) throw new Error("User not found");
+    // check if user is admin
+    return user?.isAdmin;
   }
 }
 

@@ -1,23 +1,16 @@
 // middlewares/isAdmin.ts
 import { Request, Response, NextFunction } from "express";
 import ForbiddenError from "../errors/forbidden-error";
-declare global {
-  namespace Express {
-      interface Request {
-      user: any;
-      }
-  }
-}
 
 
-export const isAdminMiddleware = (
+export const isAdminMiddleware = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  if (req.user && req.user.isAdmin) {
+    if(req.user?.isAdmin === false) {
+        throw new ForbiddenError('You are not authorized to perform this action');
+    }
     next();
-  } else {
-    throw new ForbiddenError();
-  }
+  
 };
