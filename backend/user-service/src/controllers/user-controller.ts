@@ -18,13 +18,17 @@ export const registerUser = async (req: Request, res: Response) => {
  
   try {
     // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    await UserService.registerUser(username, email, hashedPassword);
+    // salt the password
+    const salt = await bcrypt.genSalt(10);
+    // hash the password
+    const hashedPassword = await bcrypt.hash(password, salt);
+    // append salt to password
+    const saltedPassword = `${salt}-${hashedPassword}`;
+    await UserService.registerUser(username, email, saltedPassword);
     res.status(201).json({ message: 'User registered successfully' });
   } catch (error : any) {
     // get this error and convert it to LoginError
-    throw new RegisterError(error.message)
+    throw error;
   }
 };
 
@@ -38,6 +42,6 @@ export const loginUser = async (req: Request, res: Response) => {
     const { accessToken, refreshToken } = await UserService.loginUser(email, password);
     res.status(200).json({ accessToken, refreshToken });
   } catch (error : any) {
-    throw new LoginError(error.message);
+    throw error;
   }
 };

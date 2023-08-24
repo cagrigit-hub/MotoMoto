@@ -8,7 +8,6 @@ export const validateAccessToken = (token: string): boolean => {
     jwt.verify(token, jwtConfig.accessSecret);
     return true;
   } catch (error) {
-    console.log(error)
     return false;
   }
 };
