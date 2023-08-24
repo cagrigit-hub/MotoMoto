@@ -1,0 +1,26 @@
+{
+  "name": "payment-contracts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx hardhat test",
+    "test --network localhost": "npx hardhat test --network localhost",
+    "build": "npx hardhat clean && npx hardhat compile",
+    "chain": "npx hardhat node",
+    "run": "npx hardhat run"
+  },
+  "keywords": [],
+  "author": "Çağrı Kutay Ok, @kutay_ok",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "@nomicfoundation/hardhat-verify": "^1.1.1",
+    "hardhat": "^2.17.1",
+    "hardhat-contract-sizer": "^2.10.0"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.9.3",
+    "dotenv": "^16.3.1"
+  }
+}
