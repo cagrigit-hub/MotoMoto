@@ -13,9 +13,11 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.5.6",
+    "@types/ws": "^8.5.5",
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "@cakitomakito/extract_abi": "^1.0.14"
+    "@cakitomakito/extract_abi": "^1.0.17",
+    "ws": "^8.13.0"
   }
 }
