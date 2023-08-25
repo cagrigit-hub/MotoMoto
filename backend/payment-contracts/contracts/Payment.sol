@@ -14,12 +14,11 @@ contract Payment is ReentrancyGuard, Pausable, IPayment {
 
     /// @dev Owner address
     address public owner;
-    /// @dev Native token wrapper address
-    address immutable public nativeTokenWrapper;
 
-    constructor(address _ntw) ReentrancyGuard() {
+
+    constructor() ReentrancyGuard() {
         owner = msg.sender;
-        nativeTokenWrapper = _ntw;
+ 
     }   
 
     receive() external payable {
@@ -54,12 +53,11 @@ contract Payment is ReentrancyGuard, Pausable, IPayment {
             revert NoBalance();
         }
 
-        CurrencyTransferLib.transferCurrencyWithWrapper(
+        CurrencyTransferLib.transferCurrency(
             _currency,
             address(this),
             _to,
-            balance,
-            nativeTokenWrapper
+            balance
         );
     }
     
@@ -98,25 +96,23 @@ contract Payment is ReentrancyGuard, Pausable, IPayment {
         address _to,
         address _currency,
         uint256 _amount
-    ) nonReentrant external payable {
+    ) nonReentrant whenNotPaused external payable {
         validateERC20BalAndAllowance(msg.sender, _currency, _amount);
         uint256 fee = getFee();
         uint256 feeAmount = _amount * fee / MAX_BPS;
         uint256 netAmount = _amount - feeAmount;
-        CurrencyTransferLib.transferCurrencyWithWrapper(
+        CurrencyTransferLib.transferCurrency(
             _currency,
-            address(this),
+            msg.sender,
             _to,
-            netAmount,
-            nativeTokenWrapper
+            netAmount
         );
         // transfer fee to owner
-        CurrencyTransferLib.transferCurrencyWithWrapper(
+        CurrencyTransferLib.transferCurrency(
             _currency,
-            address(this),
+            msg.sender,
             owner,
-            feeAmount,
-            nativeTokenWrapper
+            feeAmount
         );
 
         emit PaymentReceived(_to, _currency, _amount, feeAmount, netAmount);
