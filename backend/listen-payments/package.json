@@ -1,0 +1,21 @@
+{
+  "name": "listen-payments",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./build/index.js",
+  "scripts": {
+    "build": "rm -rf build  && npx tsc",
+    "dev": "nodemon ./src/index.ts",
+    "start": "node ./build/src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.5.6",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@cakitomakito/extract_abi": "^1.0.14"
+  }
+}
