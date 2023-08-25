@@ -32,6 +32,9 @@ const config: HardhatUserConfig = {
       url: process.env.POLYGON_RPC!,
       accounts: [process.env.DEV_WALLET_PKEY!],
     }
+  },
+  paths: {
+    "artifacts": "../builded_contracts/artifacts",
   }
 };
 
