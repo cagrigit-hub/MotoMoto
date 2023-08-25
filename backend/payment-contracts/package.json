@@ -8,7 +8,8 @@
     "test --network localhost": "npx hardhat test --network localhost",
     "build": "npx hardhat clean && npx hardhat compile",
     "chain": "npx hardhat node",
-    "run": "npx hardhat run"
+    "run": "npx hardhat run",
+    "clean" : "rm -rf ../builded_contracts"
   },
   "keywords": [],
   "author": "Çağrı Kutay Ok, @kutay_ok",

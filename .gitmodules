@@ -1,0 +1,3 @@
+[submodule "backend/backend/extract_abi"]
+	path = backend/backend/extract_abi
+	url = https://github.com/cagrigit-hub/abi_extractor
