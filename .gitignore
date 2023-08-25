@@ -130,7 +130,8 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-
+builded_contracts/
+cache/
 
 coverage.json
 typechain
