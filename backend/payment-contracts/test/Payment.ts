@@ -115,6 +115,14 @@ describe("Payment", function () {
             // default fee is 500
             expect(await fakeERC20.balanceOf(addr2.address)).to.equal(950);
         })
+        it("should be able to pay with ETH", async function(){
+            const { payment, addr1, addr2, paymentAddr } = await loadFixture(deployFixture);
+            const balanceBefore = await addr2.provider.getBalance(addr2.address);
+            await payment.connect(addr1).pay(addr2.address, EAddress, ethers.parseEther("1"), { value: ethers.parseEther("1") });
+            // default fee is 700
+            const balanceAfter = await addr2.provider.getBalance(addr2.address);
+            expect(balanceAfter - balanceBefore).to.be.equal(ethers.parseEther("0.93"));
+        })
     })
     describe("Pause", async function(){
         it("should pause correctly", async function(){

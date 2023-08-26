@@ -79,6 +79,12 @@ contract Payment is ReentrancyGuard, Pausable, IPayment {
         address _currency,
         uint256 _currencyAmountToCheckAgainst
     ) internal view {
+        if(_currency == CurrencyTransferLib.NATIVE_TOKEN){
+            if(_addrToCheck.balance < _currencyAmountToCheckAgainst){
+                revert NoBalance();
+            }
+            return;
+        }
         if(
             IERC20(_currency).balanceOf(_addrToCheck) <
                 _currencyAmountToCheckAgainst ||
