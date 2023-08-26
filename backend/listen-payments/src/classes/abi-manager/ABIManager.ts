@@ -1,11 +1,13 @@
+import { ContractABI } from "src/types/abi.type";
+
 class ABIManager {
     constructor(
-        private abis: { [contractName: string]: any } = {}
+        private abis: { [contractName: string]: ContractABI } = {}
     ) {
       this.abis = {};
     }
   
-    addABI(contractName: string, abi: any) {
+    addABI(contractName: string, abi: ContractABI) {
       this.abis[contractName] = abi;
     }
   

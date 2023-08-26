@@ -1,13 +1,4 @@
-
-interface SubscriptionMessage {
-    jsonrpc: string;
-    id: number;
-    method: string;
-    params: (string | {
-        address: string;
-        topics: string[];
-    })[];
-}
+import SubscriptionMessage from "src/types/subscription-message.type";
 
 class SubscriptionMessageManager {
   constructor(private messages: { [messageName: string]: SubscriptionMessage } = {}) {

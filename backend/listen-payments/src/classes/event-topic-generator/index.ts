@@ -1,5 +1,6 @@
 import sha3 from "js-sha3";
 
+
 class EventTopicGenerator {
   constructor(private contractAbi: any) {
     this.contractAbi = contractAbi;
