@@ -2,7 +2,7 @@
 import express from 'express';
 import { registerUser, loginUser, getUser } from '../controllers/user-controller';
 import { loginValidation, registerValidation } from '../validations/authValidations';
-import { authMiddleware } from '../middlewares/auth-middleware';
+import { currentUser } from '@cakitomakito/moto-moto-common';
 
 const router = express.Router();
 
@@ -15,6 +15,6 @@ router.post('/register', registerValidation, registerUser);
 router.post('/login', loginValidation, loginUser);
 
 // Get user route
-router.get('/:userId', authMiddleware, getUser);
+router.get('/:userId', currentUser, getUser);
 
 export default router;

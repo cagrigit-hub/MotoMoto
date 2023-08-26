@@ -2,8 +2,8 @@ import UserModel from "../models/user-model";
 import bcrypt from "bcrypt";
 import jwtConfig from "../config/jwt";
 import jwt from "jsonwebtoken";
-import RegisterError from "../errors/register-error";
-import LoginError from "../errors/login-error";
+import { RegisterError } from "@cakitomakito/moto-moto-common";
+import { LoginError } from "@cakitomakito/moto-moto-common";
 
 class UserService {
   static async registerUser(username: string, email: string, password: string) {

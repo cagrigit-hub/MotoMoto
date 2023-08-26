@@ -1,7 +1,7 @@
 // app.ts or server.js
 import express from 'express';
 import 'express-async-errors'; // Import express-async-errors before defining routes
-import { errorHandlerMiddleware } from './middlewares/error-handler-middleware';
+import { errorHandlerMiddleware } from '@cakitomakito/moto-moto-common';
 
 import refreshRoute from './routes/refresh-route';
 import userRoute from './routes/user-route';
