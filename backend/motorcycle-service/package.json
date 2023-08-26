@@ -1,0 +1,26 @@
+{
+  "name": "motorcycle-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/index.ts",
+  "scripts": {
+    "build": "rm -rf ./build && tsc",
+    "dev": "nodemon src/index.ts",
+    "start": "node build/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/mongoose": "^5.11.97",
+    "@types/node": "^20.5.6",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@cakitomakito/moto-moto-common": "^1.0.8",
+    "express-async-errors": "^3.1.1",
+    "express-validator": "^7.0.1",
+    "mongoose": "^7.4.5"
+  }
+}
