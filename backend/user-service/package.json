@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@cakitomakito/moto-moto-common": "^1.0.6",
     "@types/jest": "^29.5.4",
     "@types/mongoose": "^5.11.97",
     "@types/supertest": "^2.0.12",

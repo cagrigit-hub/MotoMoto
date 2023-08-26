@@ -1,7 +1,7 @@
-import Error from '../errors/not-licensed';
+
 import DrivingLicense from '../models/driver-license'; 
-import { CustomError } from '../errors/custom-error';
-import NotLicensed from '../errors/not-licensed';
+import { CustomError } from '@cakitomakito/moto-moto-common';
+import { NotLicensed } from '@cakitomakito/moto-moto-common';
 import UserModel from '../models/user-model';
 class LicenseService {
   static async verifyUserLicense(userId: string) {

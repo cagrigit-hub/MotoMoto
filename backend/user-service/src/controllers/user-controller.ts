@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { validationResult } from 'express-validator';
-import InvalidCredentials from '../errors/invalid-credentials';
+import { InvalidCredentials } from '@cakitomakito/moto-moto-common';
 import UserService from '../services/user-service';
 
 export const registerUser = async (req: Request, res: Response) => {
