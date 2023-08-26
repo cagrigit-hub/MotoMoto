@@ -28,7 +28,7 @@ const config: HardhatUserConfig = {
     hardhat: {
       allowUnlimitedContractSize: true,
     },
-    polygonTestnet: {
+    pt: {
       url: process.env.POLYGON_RPC!,
       accounts: [process.env.DEV_WALLET_PKEY!],
     }
