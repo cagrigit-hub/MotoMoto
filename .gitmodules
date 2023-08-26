@@ -1,3 +1,6 @@
 [submodule "backend/extract_abi"]
 	path = backend/extract_abi
 	url = https://github.com/cagrigit-hub/abi_extractor
+[submodule "backend/common"]
+	path = backend/common
+	url = https://github.com/cagrigit-hub/motomoto-common
