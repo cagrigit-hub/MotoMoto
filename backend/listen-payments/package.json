@@ -18,6 +18,8 @@
   },
   "dependencies": {
     "@cakitomakito/extract_abi": "^1.0.17",
+    "dotenv": "^16.3.1",
+    "js-sha3": "^0.8.0",
     "ws": "^8.13.0"
   }
 }
