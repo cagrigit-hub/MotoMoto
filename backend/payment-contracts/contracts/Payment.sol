@@ -121,7 +121,7 @@ contract Payment is ReentrancyGuard, Pausable, IPayment {
             feeAmount
         );
 
-        emit PaymentReceived(_to, _currency, _amount, feeAmount, netAmount);
+        emit PaymentReceived(msg.sender,_to, _currency, _amount, feeAmount, netAmount);
 
     }
     

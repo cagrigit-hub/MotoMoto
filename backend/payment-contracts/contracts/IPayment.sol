@@ -64,13 +64,14 @@ interface IPayment {
     /// Events
     /**
      * @dev Emitted when the payment happens.
+     * @param _from payment sender
      * @param _to payment recipient
      * @param _currency currency
      * @param _amount amount
      * @param _feeAmount paidFee
      * @param _netAmount netAmount
      */
-    event PaymentReceived(address indexed _to, address indexed _currency, uint256 _amount, uint256 _feeAmount, uint256 _netAmount);
+    event PaymentReceived(address indexed _from, address indexed _to, address indexed _currency, uint256 _amount, uint256 _feeAmount, uint256 _netAmount);
     /**
      * @dev Emitted when the fee is changed.
      * @param _fee new fee
