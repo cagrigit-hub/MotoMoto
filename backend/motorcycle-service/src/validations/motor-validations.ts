@@ -20,9 +20,14 @@ export const createMotorValidations = [
 ]
 
 
-// export const updateMotorValidations = [
-//     body('description').isString().withMessage('Description is required'),
-//     body('image').withMessage('Image is required'),
-//     // status is not emtpy and is one of the values in MotorStatus
-//     body('status').withMessage('Status is required')
-// ]
+// update motor validations
+// description, image, status -> all optional
+export const updateMotorValidations = [
+    body('description').optional().notEmpty().withMessage('Description is required'),
+    body('model').optional().notEmpty().withMessage('Model is required'),
+    body('year').optional().isNumeric().notEmpty().withMessage('Year is required'),
+    body('image').optional().notEmpty().withMessage('Image is required'),
+    // status is not emtpy and is one of the values in MotorStatus
+    body('status').optional().notEmpty().withMessage('Status is required')
+    .isIn(['available', 'unavailable', 'reserved', 'rented', 'deleted']).withMessage('Status is not valid')
+]
