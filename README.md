@@ -2,6 +2,14 @@
 
 MotoMoto is a web application that allows users to rent motorcycles from other users. Users can share their motorcycles for rent, and other users can browse and book available motorcycles.
 
+## Used Technologies
+MongoDB, PostgreSQL (both dockerized), future Redis.
+Kafka as a message broker
+%100 Typescript
+JWT -> both session and token strategies
+express.js
+next.js
+
 ## Features
 
 - User registration and login with JWT authentication.
