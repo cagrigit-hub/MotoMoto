@@ -1,8 +1,7 @@
-import { ServerError, UserPayload } from '@cakitomakito/moto-moto-common';
+import { ServerError, UserPayload, KafkaProducer } from '@cakitomakito/moto-moto-common';
 import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import MotorService from '../services/motor-service';
-
 
 export const createMotor = async (req: Request, res: Response) => {
     if(!validationResult(req).isEmpty()) {
@@ -16,6 +15,12 @@ export const createMotor = async (req: Request, res: Response) => {
       const { name, description, model, year, image, status } = req.body;
       try {
         const motor = await MotorService.createMotor(name, description, model, year, image, status, currentUser!.userId);
+        const producer = new KafkaProducer(["localhost:29092"]);
+        await producer.send("motor-events", {
+            type: "motor-created",
+            data: motor
+        })
+        await producer.disconnect();
         res.status(201).send(motor);
     } catch (error) {
         throw error
