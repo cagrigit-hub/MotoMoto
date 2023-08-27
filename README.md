@@ -9,6 +9,9 @@ Kafka as a message broker
 JWT -> both session and token strategies
 express.js
 next.js
+Solidity
+2 own custom libraries -> common + abi_extractor
+1 own written Solidity real-time listener, without using any 3rd party due to increase performance.
 
 ## Features
 
