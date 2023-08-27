@@ -18,7 +18,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "@cakitomakito/moto-moto-common": "^1.0.8",
+    "@cakitomakito/moto-moto-common": "^1.0.11",
     "express-async-errors": "^3.1.1",
     "express-validator": "^7.0.1",
     "mongoose": "^7.4.5"

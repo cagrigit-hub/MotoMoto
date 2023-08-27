@@ -1,4 +1,4 @@
-import { ServerError } from '@cakitomakito/moto-moto-common';
+import { ServerError, UserPayload } from '@cakitomakito/moto-moto-common';
 import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import MotorService from '../services/motor-service';
@@ -36,7 +36,7 @@ export const updateMotorById = async (req: Request, res: Response) => {
     const { id } = req.params;
     // only description, image, status can be updated
     const { description, image, status } = req.body;
-    const currentUser = req.user.userId;
+    const currentUser = req.user as UserPayload;
     try {
         const motor = await MotorService.updateMotorById(id,currentUser, {description, image, status});
         res.status(200).send(motor);
@@ -49,7 +49,10 @@ export const updateMotorById = async (req: Request, res: Response) => {
 export const deleteMotorById = async (req: Request, res: Response) => {
     const { id } = req.params;
     try {
-        const motor = await MotorService.deleteMotorById(id);
+        
+        const user = req.user;
+        console.log(user)
+        const motor = await MotorService.deleteMotorById(id,user);
         res.status(200).send(motor);
     }
     catch (error) {

@@ -1,5 +1,5 @@
 import express from "express";
-import { createMotor, getMotorById, getMotors, updateMotorById } from "../controllers/motor-controller";
+import { createMotor, deleteMotorById, getMotorById, getMotors, updateMotorById } from "../controllers/motor-controller";
 import { createMotorValidations } from "../validations/motor-validations";
 import { currentUser } from "@cakitomakito/moto-moto-common";
 
@@ -14,6 +14,7 @@ router.get("/all", currentUser, getMotors);
 
 router.put("/:id", currentUser, createMotorValidations, updateMotorById);
 
+router.delete("/:id", currentUser, createMotorValidations, deleteMotorById);
 
 
 export default router;
