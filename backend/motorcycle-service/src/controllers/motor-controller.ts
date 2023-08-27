@@ -24,6 +24,7 @@ export const createMotor = async (req: Request, res: Response) => {
 
 export const getMotorById = async (req: Request, res: Response) => {
     const { id } = req.params;
+  
     try {
         const motor = await MotorService.getMotorById(id);
         res.status(200).send(motor);
@@ -34,11 +35,14 @@ export const getMotorById = async (req: Request, res: Response) => {
 
 export const updateMotorById = async (req: Request, res: Response) => {
     const { id } = req.params;
-    // only description, image, status can be updated
-    const { description, image, status } = req.body;
+    if(!id) {
+        throw new ServerError('Id is required');
+    }
+    // whole motor can be updated, given body will be used as a partial
+
     const currentUser = req.user as UserPayload;
     try {
-        const motor = await MotorService.updateMotorById(id,currentUser, {description, image, status});
+        const motor = await MotorService.updateMotorById(id,currentUser, req.body);
         res.status(200).send(motor);
     }
     catch (error) {
@@ -48,10 +52,12 @@ export const updateMotorById = async (req: Request, res: Response) => {
 
 export const deleteMotorById = async (req: Request, res: Response) => {
     const { id } = req.params;
+    if(!id) {
+        throw new ServerError('Id is required');
+    }
     try {
         
-        const user = req.user;
-        console.log(user)
+        const user = req.user as UserPayload;
         const motor = await MotorService.deleteMotorById(id,user);
         res.status(200).send(motor);
     }
@@ -62,6 +68,9 @@ export const deleteMotorById = async (req: Request, res: Response) => {
 
 export const getMotors = async (req: Request, res: Response) => {
     const { page, limit } = req.query;
+    if(parseInt(page as string) <= 0) {
+        throw new ServerError('Page must be greater than 0');
+    }
     try {
         const motors = await MotorService.getMotors(
             parseInt(page as string),

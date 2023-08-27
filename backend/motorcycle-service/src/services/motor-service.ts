@@ -14,7 +14,7 @@ class MotorService {
             });
             return await newMotor.save();
         } catch (error: any) {
-            throw new FailedError('Failed to create motor' + error.message);
+            throw new FailedError('Failed to create motor ' + error.message);
         }
     }
 
@@ -26,7 +26,7 @@ class MotorService {
             }
             return motor;
         } catch (error: any) {
-            throw new FailedError('Failed to get motor by id' + error.message);
+            throw new FailedError('Failed to get motor by id ' + error.message);
         }
     }
     static async updateMotorById(id: string,operator: UserPayload, motor: Partial<MT>) {
@@ -43,7 +43,7 @@ class MotorService {
             }
             return motorx;
         } catch (error: any) {
-            throw new FailedError('Failed to update motor by id' + error.message);
+            throw new FailedError('Failed to update motor by id ' + error.message);
         }
     }
     static async deleteMotorById(id: string, operator: UserPayload) {
@@ -54,8 +54,7 @@ class MotorService {
                 throw new NotFound('Motor not found');
             }
             if(motor.owner.toString() !== operator.userId && !operator.isAdmin) {
-                console.log(motor.owner.toString(), operator.userId)
-                console.log("here")
+             
                 throw new UnauthorizedError('You are not allowed to delete this motor ');
             }
             motor.status = MotorStatus.Deleted;
@@ -72,7 +71,7 @@ class MotorService {
             const motors = await Motor.find({}).skip((page - 1) * limit).limit(limit);
             return motors;
         } catch (error: any) {
-            throw new FailedError('Failed to get motors' + error.message);
+            throw new FailedError('Failed to get motors ' + error.message);
         }
     }
 }

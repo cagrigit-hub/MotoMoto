@@ -11,7 +11,7 @@ const VERSION = 'v1';
 const prefix = `/api/${VERSION}`;
 
 // routes will be here
-app.use(`${prefix}/motors`,motorRoute);
+app.use(`${prefix}/motorcycles`,motorRoute);
 
 app.use(errorHandlerMiddleware);
 
