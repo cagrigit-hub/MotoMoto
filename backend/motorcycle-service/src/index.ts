@@ -1,6 +1,6 @@
 import app from "./app";
 import connectDB from "./config/database";
-
+import "./consumers/user-consumers";
 const PORT = process.env.PORT || 4003;
 
 connectDB();

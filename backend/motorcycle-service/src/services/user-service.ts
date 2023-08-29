@@ -1,19 +1,23 @@
 import UserModel from "../models/user-model";
 import bcrypt from "bcrypt";
-import jwtConfig from "../config/jwt";
+import jwtConfig from "../config/jwt"
+
 import jwt from "jsonwebtoken";
 import { RegisterError, UnauthorizedError, UserPayload } from "@cakitomakito/moto-moto-common";
 import { LoginError } from "@cakitomakito/moto-moto-common";
+import mongoose from "mongoose";
 
 class UserService {
-  static async registerUser(username: string, email: string, password: string) {
+  static async registerUser(id: mongoose.Types.ObjectId ,username: string, email: string, password: string) {
     try {
       const newUser = new UserModel({
+        _id: id,
         username,
         email,
         password,
       });
       const res = await newUser.save();
+
       return res;
     } catch (error: any) {
       // handle mongo error if duplication error occurs
