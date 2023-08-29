@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { validationResult } from 'express-validator';
-import { InvalidCredentials } from '@cakitomakito/moto-moto-common';
+import { InvalidCredentials, MOTOR_CREATED, MOTOR_EVENTS, USER_CREATED, USER_EVENTS } from '@cakitomakito/moto-moto-common';
 import UserService from '../services/user-service';
+import { KafkaProducer } from '@cakitomakito/moto-moto-common';
 
 export const registerUser = async (req: Request, res: Response) => {
   if(!validationResult(req).isEmpty()) {
@@ -22,7 +23,20 @@ export const registerUser = async (req: Request, res: Response) => {
     const hashedPassword = await bcrypt.hash(password, salt);
     // append salt to password
     const saltedPassword = `${salt}-${hashedPassword}`;
-    await UserService.registerUser(username, email, saltedPassword);
+    const user = await UserService.registerUser(username, email, saltedPassword);
+    // send a message to kafka
+    const producer = new KafkaProducer(["localhost:29092"]);
+    try {
+      await producer.send(USER_EVENTS, {
+        type: USER_CREATED,
+        data: user
+      })
+    } catch (error) {
+      // revert the user creation
+      await UserService.deleteUser({userId: "1", isAdmin: true},user._id);
+      throw error;
+    }
+    
     res.status(201).json({ message: 'User registered successfully' });
   } catch (error : any) {
     // get this error and convert it to LoginError
@@ -55,4 +69,3 @@ export const getUser = async (req: Request, res: Response) => {
     throw error;
   }
 }
-
